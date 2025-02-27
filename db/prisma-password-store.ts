@@ -19,3 +19,21 @@ export async function add(p : Passwords){
         console.log("error on save password : " , error)
     }
 }
+export async function update(p : Passwords){
+    try{
+        const updatedPassword = await prisma.passwords.update({
+            where : {
+                id : p.id
+            },
+            data : {
+                emailOrUsername : p.emailOrPassword,
+                password : p.password,
+                website : p.website,
+            }
+        })
+        console.log("password updated : " , updatedPassword)
+        return updatedPassword
+    } catch (error){
+        console.log("error on update password : " , error)
+    }
+}
