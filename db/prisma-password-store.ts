@@ -52,3 +52,18 @@ export async function deletePassword(id: number){
         console.log("error on delete password : " , error)
     }
 }
+
+export async function getPasswords(userId: string){
+    try{
+        const passwords = await prisma.passwords.findMany({
+            where : {
+                userId : userId
+            }
+        })
+        console.log("passwords : " , passwords)
+        return passwords
+    }
+    catch (error){
+        console.log("error on get passwords : " , error)
+    }
+}
