@@ -67,3 +67,18 @@ export async function getPasswords(userId: string){
         console.log("error on get passwords : " , error)
     }
 }
+
+export async function getPasswordById(id: number){
+    try{
+        const password = await prisma.passwords.findUnique({
+            where : {
+                id : id
+            }
+        })
+        console.log("password : " , password)
+        return password
+    }
+    catch (error){
+        console.log("error on get password : " , error)
+    }
+}
