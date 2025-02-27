@@ -43,3 +43,25 @@ export async function verifyUser(u : User) {
         console.log("error on verify user : " , error)
     }
 }
+
+export async function checkMasterPassword(email : string, masterPassword : string){
+    try {
+        const user = await prisma.user.findFirst({
+            where : {
+                email : email
+            }
+        })
+        if(user){
+            const isMasterPasswordValid = await bcrypt.compare(masterPassword, user.masterPassword)
+            if(isMasterPasswordValid){
+                return user
+            } else {
+                return null
+            }
+        } else {
+            return null
+        }
+    } catch (error){
+        console.log("error on verify user : " , error)
+    }
+}
