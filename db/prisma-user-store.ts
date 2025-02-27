@@ -21,3 +21,25 @@ export async function addUser(u : User) {
         console.log("error on save user : " , error)
     }
 }
+
+export async function verifyUser(u : User) {
+    try {
+        const user = await prisma.user.findFirst({
+            where : {
+                email : u.email
+            }
+        })
+        if(user){
+            const isPasswordValid = await bcrypt.compare(u.password, user.password)
+            if(isPasswordValid){
+                return user
+            } else {
+                return null
+            }
+        } else {
+            return null
+        }
+    } catch (error){
+        console.log("error on verify user : " , error)
+    }
+}
