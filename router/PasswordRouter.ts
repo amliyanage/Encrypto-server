@@ -1,6 +1,6 @@
 import express from 'express';
 import { Passwords } from '../module/Password';
-import { add, update } from '../db/prisma-password-store';
+import { add, update, deletePassword } from '../db/prisma-password-store';
 
 const router = express.Router();
 
@@ -24,6 +24,18 @@ router.put('/update-password', async (req, res) => {
         res.status(201).json(updatedPassword)
     } catch (error){
         console.log("error on update password : " , error)
+        res.status(500).json(error)
+    }
+})
+
+router.delete('/delete-password/:id', async (req, res) => {
+    const id = parseInt(req.params.id)
+    try{
+        const deletedPassword = await deletePassword(id)
+        console.log("password deleted : " , deletedPassword)
+        res.status(201).json(deletedPassword)
+    } catch (error){
+        console.log("error on delete password : " , error)
         res.status(500).json(error)
     }
 })

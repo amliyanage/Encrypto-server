@@ -19,6 +19,7 @@ export async function add(p : Passwords){
         console.log("error on save password : " , error)
     }
 }
+
 export async function update(p : Passwords){
     try{
         const updatedPassword = await prisma.passwords.update({
@@ -35,5 +36,19 @@ export async function update(p : Passwords){
         return updatedPassword
     } catch (error){
         console.log("error on update password : " , error)
+    }
+}
+
+export async function deletePassword(id: number){
+    try{
+        const deletedPassword = await prisma.passwords.delete({
+            where : {
+                id : id
+            }
+        })
+        console.log("password deleted : " , deletedPassword)
+        return deletedPassword
+    } catch (error){
+        console.log("error on delete password : " , error)
     }
 }
