@@ -1,6 +1,6 @@
 export class Passwords {
     id !: number
-    emailOrPassword !: string
+    emailOrUsername !: string
     password !: string
     website !: string
     userId !: string

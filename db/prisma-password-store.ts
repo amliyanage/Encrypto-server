@@ -7,7 +7,7 @@ export async function add(p : Passwords){
     try{
         const savedPassword = await prisma.passwords.create({
             data : {
-                emailOrUsername : p.emailOrPassword,
+                emailOrUsername : p.emailOrUsername,
                 password : p.password,
                 website : p.website,
                 userId : p.userId
@@ -27,7 +27,7 @@ export async function update(p : Passwords){
                 id : p.id
             },
             data : {
-                emailOrUsername : p.emailOrPassword,
+                emailOrUsername : p.emailOrUsername,
                 password : p.password,
                 website : p.website,
             }
