@@ -23,9 +23,9 @@ router.post("/login", async (req, res) => {
         const verifiedUser = await verifyUser(user);
         console.log("user verified : ", verifiedUser);
         if(verifiedUser){
-            const token = jwt.sign({email : verifiedUser.email}, process.env.SECRET_KEY as Secret , {expiresIn : "1h"});
+            const token = jwt.sign({email : verifiedUser.email}, process.env.SECRET_KEY as Secret );
             console.log("token : ", token);
-            const refreshToken = jwt.sign({email : verifiedUser.email}, process.env.REFRESH_TOKEN as Secret, {expiresIn : "1h"});
+            const refreshToken = jwt.sign({email : verifiedUser.email}, process.env.REFRESH_TOKEN as Secret);
             console.log("refresh_token : ", refreshToken);
             res.status(200).json({token : token, refreshToken : refreshToken , userEmail : verifiedUser.email});
         } else {
