@@ -11,10 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cross({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    origin: "*"
 }))
 
 app.options('*', cross());

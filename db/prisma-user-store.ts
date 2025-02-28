@@ -4,25 +4,35 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient()
 
-export async function addUser(u : User) {
+export async function addUser(u: User) {
     try {
-        const hashedPassword = await bcrypt.hash(u.password, 10)
-        const hashedMasterPassword = await bcrypt.hash(u.masterPassword, 10)
+        console.log("Password: ", u.password);
+        console.log("Master Password: ", u.masterPassword);
+
+        // Check if passwords are non-empty before hashing
+        if (!u.password || !u.masterPassword) {
+            throw new Error('Password or Master Password is missing');
+        }
+
+        const hashedPassword = await bcrypt.hash(u.password, 10);
+        const hashedMasterPassword = await bcrypt.hash(u.masterPassword, 10);
+
         const savedUser = await prisma.user.create({
-            data : {
-                email : u.email,
-                password : hashedPassword,
-                masterPassword : hashedMasterPassword
+            data: {
+                email: u.email,
+                password: hashedPassword,
+                masterPassword: hashedMasterPassword
             }
-        })
-        console.log("user saved : " , savedUser)
-        return savedUser
-    } catch (error){
-        console.log("error on save user : " , error)
+        });
+        console.log("User saved: ", savedUser);
+        return savedUser;
+    } catch (error) {
+        console.log("Error on save user: ", error);
     }
 }
 
-export async function verifyUser(u : User) {
+
+export async function verifyUser(u : {email : string , password : string} ) {
     try {
         const user = await prisma.user.findFirst({
             where : {

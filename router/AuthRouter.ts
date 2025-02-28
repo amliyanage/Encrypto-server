@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const user = req.body;
+    const user = req.body as {email : string, password : string};
     try {
         const verifiedUser = await verifyUser(user);
         console.log("user verified : ", verifiedUser);
@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
             const token = jwt.sign({email : verifiedUser.email}, process.env.SECRET_KEY as Secret , {expiresIn : "1h"});
             console.log("token : ", token);
             const refreshToken = jwt.sign({email : verifiedUser.email}, process.env.REFRESH_TOKEN as Secret, {expiresIn : "1h"});
-            console.log("refresh token : ", refreshToken);
+            console.log("refresh_token : ", refreshToken);
             res.status(200).json({token : token, refreshToken : refreshToken , userEmail : verifiedUser.email});
         } else {
             res.status(401).json({message : "Invalid credentials"})
